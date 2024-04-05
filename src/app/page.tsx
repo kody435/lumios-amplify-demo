@@ -5,15 +5,20 @@ import { revalidatePath } from "next/cache";
 import { AuthGetCurrentUserServer, cookiesClient } from "../../utils/amplify-utils";
 
 import Logout from "../../components/Logout";
+import { redirect } from "next/navigation";
 
 async function App() {
   const user = await AuthGetCurrentUserServer();
+  console.log("\n\n\n"+user + "\n\n\n");
+  if (!user) {
+    return redirect("/login");
+  }
   const { data: todos } = await cookiesClient.models.Todo.list();
 
   async function addTodo(data: FormData) {
     "use server";
     const title = data.get("title") as string;
-    const data1 = await cookiesClient.models.Todo.create({
+    await cookiesClient.models.Todo.create({
       content: title,
       done: false,
       priority: "medium",
@@ -31,7 +36,7 @@ async function App() {
       </form>
 
       <ul>
-        {todos && todos.map((todo) => <li key={todo.id}>{todo.content}</li>)}
+        {todos ? todos.map((todo) => <li key={todo.id}>{todo.content}</li>) : <div>No todos yet</div>}
       </ul>
     </>
   );
