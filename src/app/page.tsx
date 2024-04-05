@@ -1,8 +1,7 @@
-// app/page.tsx
 
 import { revalidatePath } from "next/cache";
-
 import { AuthGetCurrentUserServer, cookiesClient } from "../../utils/amplify-utils";
+import { Flex, Text, Button } from '@radix-ui/themes';
 
 import Logout from "../../components/Logout";
 import { redirect } from "next/navigation";
@@ -32,7 +31,7 @@ async function App() {
       {user && <Logout />}
       <form action={addTodo}>
         <input type="text" name="title" />
-        <button type="submit">Add Todo</button>
+        <Button type="submit">Add Todo</Button>
       </form>
 
       <ul>

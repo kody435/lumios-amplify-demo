@@ -3,6 +3,7 @@ import "@aws-amplify/ui-react/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Theme, ThemePanel } from '@radix-ui/themes';
 
 import ConfigureAmplifyClientSide from "../../components/ConfigureAmplify";
 
@@ -22,7 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ConfigureAmplifyClientSide />
+        <Theme  accentColor="violet" grayColor="gray" radius="full" scaling="100%">
         {children}
+        <ThemePanel />
+        </Theme>
       </body>
     </html>
   );
